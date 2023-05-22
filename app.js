@@ -3,17 +3,15 @@ var bodyParser = require('body-parser')
 var mongoose= require('mongoose')
 const { studentModel } = require('./models/studentmodel')
 
+mongoose.connect("mongodb://mongo:27017/docker-node-mongo",{useNewUrlParser:true,useUnifiedTopology:true})
 
 
 var app=express()
 app.use(bodyParser.urlencoded({ extended: false }))
   
 app.use(bodyParser.json())
-mongoose.connect("mongodb+srv://anupama:anupama@cluster0.muxgnix.mongodb.net/?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology:true})
-mongoose.set('strictQuery', true);
 
-
-app.get('/ViewAll',async (req,res)=>{
+app.get('/viewall',async (req,res)=>{
     try {
         var result= await studentModel.find(
             res.json(result)
@@ -23,9 +21,7 @@ app.get('/ViewAll',async (req,res)=>{
      {
         res.send(error)
     }
-    app.listen(3000,()=>{
-        console.log("Server started")
-    })
+    
 })
 
 app.post('/read',(req,res)=>{
@@ -47,5 +43,5 @@ app.post('/read',(req,res)=>{
 })
 
 app.listen( 3000,()=>{
-    console.log("Server started at http://localhost:3000/")
+    console.log("Server started at http://localhost:3000")
 })
